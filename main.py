@@ -1,3 +1,5 @@
+"""Send an cloud event."""
+
 import os
 import uuid
 import datetime
@@ -55,10 +57,12 @@ def create_cloud_event_data():
 
 
 def create_connection():
+    """Create connection to cloud event reciever."""
     pass
 
 
 def main():
+    """Run main fucntions."""
     event = [create_cloud_event_attributes(), create_cloud_event_data()]
     print(event)
 
