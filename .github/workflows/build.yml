@@ -65,7 +65,18 @@ jobs:
         uses: actions/checkout@v3
       
       - name: Install Python dependencies on ${{ matrix.os }}
-        if: startsWith(matrix.os, 'ubuntu' or 'macos')
+        if: startsWith(matrix.os, 'ubuntu')
+        run: |
+          if [ -s "requirements.txt" ]
+          then
+            python -m pip install --upgrade --force --no-cache-dir pip 
+            pip install --force --no-cache-dir requirements.txt
+          else
+            echo "no requirements.txt to install"
+          fi
+      
+      - name: Install Python dependencies on ${{ matrix.os }}
+        if: startsWith(matrix.os, 'macos')
         run: |
           if [ -s "requirements.txt" ]
           then
