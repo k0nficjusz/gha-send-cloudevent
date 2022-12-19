@@ -1,0 +1,12 @@
+name: "Send Cloud Event"
+description: "An action to send a CloudEvent"
+inputs:
+  endpoint_url:
+    description: "The URL of the CloudEvents endpoint"
+    required: true
+  authorization:
+    description: "The authorization header to use when sending the event"
+    required: false
+runs:
+  using: "python3"
+  main: "main.py"
