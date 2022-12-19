@@ -65,8 +65,9 @@ jobs:
       
       - name: Install Python dependencies
         run: |
-          if [ -f "requirements.txt" ] then
-            python -m pip install --upgrade --force --no-cache-dir pip
+          if [ -f "requirements.txt" ]
+          then
+            python -m pip install --upgrade --force --no-cache-dir pip 
             pip install --force --no-cache-dir requirements.txt
           else
             echo "no requirements.txt to install"
