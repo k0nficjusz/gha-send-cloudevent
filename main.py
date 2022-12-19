@@ -1,7 +1,6 @@
 import os
 import uuid
 import datetime
-from cloudevents.http import CloudEvent
 
 
 def create_cloud_event_attributes():
@@ -62,7 +61,7 @@ def create_connection():
 
 
 def main():
-    event = [create_cloud_event_attributes, create_cloud_event_data]
+    event = [create_cloud_event_attributes(), create_cloud_event_data()]
     print(event)
 
 
