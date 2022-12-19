@@ -9,71 +9,72 @@ on:
   workflow_dispatch:
     
 jobs:
-  name: Build (python-${{ matrix.python-version }}, ${{ matrix.os }})  
-  runs-on: ${{ matrix.os }}
-  strategy:
-    matrix:
-      os:
-        - macos-latest
-        - ubuntu-latest
-        - windows-latest
-      python-version: ["3.11"]
+  build-and-test:
+    name: Build (python-${{ matrix.python-version }}, ${{ matrix.os }})  
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os:
+          - macos-latest
+          - ubuntu-latest
+          - windows-latest
+        python-version: ["3.11"]
 
-      include:
-        - os: macos-latest
-          python-version: "3.8"
-        - os: macos-latest
-          python-version: "3.9"
-        - os: macos-latest
-          python-version: "3.10"
-        - os: macos-latest
-          python-version: "3.11"
+        include:
+          - os: macos-latest
+            python-version: "3.8"
+          - os: macos-latest
+            python-version: "3.9"
+          - os: macos-latest
+            python-version: "3.10"
+          - os: macos-latest
+            python-version: "3.11"
 
-        - os: ubuntu-latest
-          python-version: "3.8"
-        - os: ubuntu-latest
-          python-version: "3.9"
-        - os: ubuntu-latest
-          python-version: "3.10"
-        - os: ubuntu-latest
-          python-version: "3.11"
+          - os: ubuntu-latest
+            python-version: "3.8"
+          - os: ubuntu-latest
+            python-version: "3.9"
+          - os: ubuntu-latest
+            python-version: "3.10"
+          - os: ubuntu-latest
+            python-version: "3.11"
 
-        - os: windows-latest
-          python-version: "3.8"
-        - os: windows-latest
-          python-version: "3.9"
-        - os: windows-latest
-          python-version: "3.10"
-        - os: windows-latest
-          python-version: "3.11"
+          - os: windows-latest
+            python-version: "3.8"
+          - os: windows-latest
+            python-version: "3.9"
+          - os: windows-latest
+            python-version: "3.10"
+          - os: windows-latest
+            python-version: "3.11"
 
-    steps:
-      - name: Setup ubuntu-latest
-        if: startsWith(matrix.os, 'ubuntu')
-        run: |
-          sudo apt-get update
-          sudo apt-get install language-pack-en language-pack-de
-      
-      - name: Setup Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v4
-        with:
-          python-version: ${{ matrix.python-version }}
+      steps:
+        - name: Setup ubuntu-latest
+          if: startsWith(matrix.os, 'ubuntu')
+          run: |
+            sudo apt-get update
+            sudo apt-get install language-pack-en language-pack-de
+        
+        - name: Setup Python ${{ matrix.python-version }}
+          uses: actions/setup-python@v4
+          with:
+            python-version: ${{ matrix.python-version }}
 
-      - name: Checkout
-        uses: actions/checkout@v3
-      
-      - name: Install Python dependencies
-        run: |
-          if [ -f "requirements.txt" ] then
-            python -m pip install --upgrade --force --no-cache-dir pip
-            pip install --force --no-cache-dir requirements.txt
-          else
-            echo "no requirements.txt to install"
-          fi
+        - name: Checkout
+          uses: actions/checkout@v3
+        
+        - name: Install Python dependencies
+          run: |
+            if [ -f "requirements.txt" ] then
+              python -m pip install --upgrade --force --no-cache-dir pip
+              pip install --force --no-cache-dir requirements.txt
+            else
+              echo "no requirements.txt to install"
+            fi
 
-      - name: Upload changed expectation files
-        if: steps.changes.outcome == 'failure'
-        uses: actions/upload-artifact@v3
-        with:
-          name: Changed expectations
-          path: changed-expectations.zip
+        - name: Upload changed expectation files
+          if: steps.changes.outcome == 'failure'
+          uses: actions/upload-artifact@v3
+          with:
+            name: Changed expectations
+            path: changed-expectations.zip
