@@ -4,8 +4,7 @@ import datetime
 
 
 def create_cloud_event_attributes():
-    """
-    Creates a dictionary of CloudEvent attributes.
+    """Create a dictionary of CloudEvent attributes.
 
     Returns:
         A dictionary of CloudEvent attributes, including the specversion, type,
@@ -32,8 +31,7 @@ def create_cloud_event_attributes():
 
 
 def create_cloud_event_data():
-    """
-    Creates a dictionary of data to include in the CloudEvent.
+    """Create a dictionary of data to include in the CloudEvent.
 
     Returns:
         A dictionary of data, including the repository name, branch name, commit
@@ -66,4 +64,4 @@ def main():
 
 
 if __name__ == "__main__":
-  main()
+    main()

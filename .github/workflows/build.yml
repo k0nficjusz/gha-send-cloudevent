@@ -102,9 +102,7 @@ jobs:
             Write-Host "no requirements.txt to install" 
           }
 
-      - name: Upload changed expectation files
-        if: steps.changes.outcome == 'failure'
-        uses: actions/upload-artifact@v3
-        with:
-          name: Changed expectations
-          path: changed-expectations.zip
+      - name: Code audit with pylama
+        run: |
+          pip install pylama
+          pylama .
