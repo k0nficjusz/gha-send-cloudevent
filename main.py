@@ -56,11 +56,15 @@ def create_cloud_event_data():
 
     return data
 
+
 def create_connection():
     pass
 
+
 def main():
-    pass
+    event = [create_cloud_event_attributes, create_cloud_event_data]
+    print(event)
+
 
 if __name__ == "__main__":
   main()
