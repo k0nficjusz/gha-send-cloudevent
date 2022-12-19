@@ -64,7 +64,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       
-      - name: Install Python dependencies
+      - name: Install Python dependencies on ${{ matrix.os }}
+        if: startsWith(matrix.os, 'ubuntu' or 'macos')
         run: |
           if [ -s "requirements.txt" ]
           then
@@ -73,6 +74,22 @@ jobs:
           else
             echo "no requirements.txt to install"
           fi
+
+      - name: Install Python dependencies on ${{ matrix.os }}
+        if: startsWith(matrix.os, 'windows')
+        run: |
+          if (Test-Path -Path requirements.txt -PathType Leaf) {
+            if (-not([String]::IsNullOrWhiteSpace((Get-content requirements.txt)))) {
+              python -m pip install --upgrade --force --no-cache-dir pip 
+              pip install --force --no-cache-dir requirements.txt
+            }
+            else {   
+              Write-Host "requirements.txt is empty" 
+            }
+          }
+          else {   
+            Write-Host "no requirements.txt to install" 
+          }
 
       - name: Upload changed expectation files
         if: steps.changes.outcome == 'failure'
